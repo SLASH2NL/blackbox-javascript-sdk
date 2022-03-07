@@ -1,0 +1,16 @@
+export enum ElementType {
+    Audio = 'audio',
+    Button = 'button',
+    Html = 'html',
+    Image = 'image',
+    LiveStream = 'live_stream',
+    Model = 'model',
+    Text = 'text',
+    Video = 'video',
+    NativeVideo = 'native_video',
+    LightElement = 'light',
+    RichText = 'rich_text',
+    Iframe = 'iframe',
+    ViewPoint = 'view_point',
+    Group = 'group',
+}

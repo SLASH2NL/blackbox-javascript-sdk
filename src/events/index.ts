@@ -7,6 +7,7 @@ import { ElementChangeTextEvent } from "./ElementChangeTextEvent";
 import { ElementPositionEvent } from "./ElementPositionEvent";
 import { ElementRotateEvent } from "./ElementRotateEvent";
 import { ElementScaleEvent } from "./ElementScaleEvent";
+import { ElementMuteEvent } from ".//ElementMuteEvent";
 
 import { MuteMasterEvent } from "./MuteMasterEvent";
 import { PlayEvent } from "./PlayEvent";
@@ -17,7 +18,7 @@ import { ElementListRequestEvent } from "./ElementListRequestEvent";
 import { ElementListResponseEvent } from "./ElementListResponseEvent";
 
 export {
-    BlackboxEvent, 
+    BlackboxEvent,
     ElementVisibilityEvent,
     ElementChangeTextEvent,
     ElementPositionEvent,
@@ -25,10 +26,11 @@ export {
     ElementScaleEvent,
     ElementListResponseEvent,
     ElementListRequestEvent,
+    ElementMuteEvent,
     MuteMasterEvent,
     PongEvent,
     PlayEvent,
     PingEvent,
     ViewPointSelectEvent,
     VolumeEvent,
-} 
+}

@@ -3,13 +3,14 @@ import { Blackbox } from '../main/index';
 
 test('Without iframe', () => {
     expect(() => {
-        Blackbox.init(null)
-    }).toThrowError('Blackbox frame not found');
+        Blackbox.init()
+    }).not.toThrowError();
 })
 
 test('With iframe invalid url', () => {
     const iframe = document.createElement('iframe');
     iframe.id = 'test-frame';
+    iframe.removeAttribute('src')
 
     document.body.appendChild(iframe);
     expect(() => {

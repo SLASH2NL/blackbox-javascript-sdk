@@ -1,62 +1,78 @@
 "use strict";
-import { BlackboxEvent } from "../events/BlackboxEvent";
 import { Subject } from "rxjs";
-import { 
-  ElementChangeTextEvent, 
-  ElementPositionEvent, 
-  ElementRotateEvent, 
-  ElementScaleEvent, 
-  ElementVisibilityEvent, 
-  MuteMasterEvent, 
-  PingEvent, 
-  PlayEvent, 
-  PongEvent,  
-  ViewPointSelectEvent, 
-  VolumeEvent 
-} from "../events";
-import { ElementMuteEvent } from "../events/ElementMuteEvent";
-import { ElementListResponseEvent } from "../events/ElementListResponseEvent";
+import {
+  ElementChangeTextEvent,
+  ElementPositionEvent,
+  ElementRotateEvent,
+  ElementScaleEvent,
+  ElementVisibilityEvent,
+  MuteMasterEvent,
+  ElementMuteEvent,
+  ElementListResponseEvent,
+  BlackboxEvent,
+  PingEvent,
+  PlayEvent,
+  PongEvent,
+  ViewPointSelectEvent,
+  VolumeEvent
+} from "../events/index";
 
 export class Blackbox {
-  private static element: HTMLIFrameElement;
+  private static window: Window;
   private static url: URL;
+  public static isInitialized: boolean = false;
   public static subject: Subject<BlackboxEvent> = new Subject<BlackboxEvent>()
 
-  public static init(element: HTMLIFrameElement|null) {
-    if (!element) {
-      throw new Error('Blackbox frame not found');
-    }
+  /**
+   * Initialize the blackbox sdk.
+   * If no HTMLIFrameElement is given,
+   * the window of the current page will be used.
+   *
+   * @param element HTMLIFrameElement|null
+   * @returns void
+   * @throws Error
+   */
+  public static init(element: HTMLIFrameElement|null = null): void {
+
+    Blackbox.window = element?.contentWindow ?? window;
 
     try {
-      Blackbox.url = new URL(element.src);
+      Blackbox.url = new URL(element ? element.src : Blackbox.window.origin);
     } catch (e) {
       throw new Error('Given url is invalid.');
     }
 
-    Blackbox.element = element;
-
     window.addEventListener('message', Blackbox.postMessageListener)
+    Blackbox.isInitialized = true;
   }
 
-  public static post(event: BlackboxEvent) {
-    if (Blackbox.element === null) {
-      throw new Error('Blackbox not initialized.');
-    }
-
-    if (Blackbox.element.contentWindow === null) {
-      throw new Error('ContentWindow is not available on the given element.');
-    }
-
-    Blackbox.element.contentWindow.postMessage(JSON.stringify(event), Blackbox.url.protocol + '//' + Blackbox.url.host);
+  /**
+   * Post a Blackbox event to the blackbox window.
+   *
+   * @param event BlackboxEvent
+   * @return void
+   */
+  public static post(event: BlackboxEvent): void {
+    Blackbox.window.postMessage(JSON.stringify(event), Blackbox.url.protocol + '//' + Blackbox.url.host);
   }
 
-  public static get(data: string) {
-    const event = JSON.parse(data);
-    if(!event) {
-      throw new Error('Event is not valid.');
+  /**
+   * Get a Blackbox event from a json string.
+   *
+   * @param jsonData string
+   * @returns BlackboxEvent
+   * @throws Error
+   */
+  public static get(jsonData: string) {
+    let event = null
+    try {
+      event = JSON.parse(jsonData);
+    } catch (e) {
+        // Not valid json skip.
+       return;
     }
 
-    switch (event.channel) {
+    switch (event.channel ?? '') {
       case 'element-change-text':
         Blackbox.subject.next(new ElementChangeTextEvent(event.element_id, event.text));
         break;
@@ -99,23 +115,33 @@ export class Blackbox {
       default:
         throw new Error('Event is not valid.');
     }
-  } 
+  }
 
-  public static destroy() {
+  /**
+   * Remove event listener on destroy.
+   *
+   * @return void
+   */
+  public static destroy(): void {
     window.removeEventListener('message', Blackbox.postMessageListener);
   }
 
-  private static postMessageListener(event: MessageEvent) {
+  /**
+   * Listen for events from the blackbox window.
+   *
+   * @param event MessageEvent
+   * @returns void
+   * @throws Error
+   */
+  private static postMessageListener(event: MessageEvent): void {
     try {
-
-      console.log(event.origin)
       if (event.origin !== Blackbox.url.origin) {
         return
       }
 
       Blackbox.get(event.data);
     } catch (e) {
-      throw new Error('Given url is invalid.');
+      throw new Error('Event is not valid.');
     }
   }
 }

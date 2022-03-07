@@ -11,4 +11,3 @@ export class MuteMasterEvent implements BlackboxEvent {
   }
 
 }
-  

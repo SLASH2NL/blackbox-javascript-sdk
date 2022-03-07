@@ -1,4 +1,7 @@
 src
 tsconfig.json
+jestconfig.json
+rollup.config.js
+tsconfig.json
 tslint.json
 .prettierrc
