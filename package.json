@@ -1,6 +1,6 @@
 {
   "name": "blackbox-javascript-sdk",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Blackbox javascript sdk",
   "scripts": {
     "test": "jest --config ./jestconfig.json",

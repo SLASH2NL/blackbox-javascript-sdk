@@ -40,7 +40,7 @@ You should now get a prompt saying ```'Received pong event!'```
 <br>
 
 ### Usage with vanilla JS via a CDN.
-Wen included via a CDN you will have to prefix the blackbox instance with 'blackbox.':
+When included via a CDN you will have to prefix the blackbox instance with 'blackbox.':
 
 ```javascript
 var instance = blackbox.Blackbox;
@@ -115,11 +115,11 @@ Blackbox.subject.subscribe((event) => {
 | [ElementChangeTextEvent](src/events/ElementChangeTextEvent.ts)        | Set the text of a text element 	|	``element_id: string, text: string``
 | [ElementListRequestEvent](src/events/ElementListRequestEvent.ts)       | Request a list of available elements in a room 	|	``filter: enum ElementType``
 | [ElementListResponseEvent](src/events/ElementListResponseEvent.ts)      | Return all available elements in a room. 	|	``elements: Array<RoomElement>``
-| [ElementMuteEvent](src/events/ElementMuteEvent.ts)              | Mute or un-mute a element. 	|	``element_id: string, state: boolean``
-| [ElementPositionEvent](src/events/ElementPositionEvent.ts)          | Set the position of a element. 	|	``element_id: string, x: number, y:number, z: number, tween: boolean, tween_duration: number``
-| [ElementRotateEvent](src/events/ElementRotateEvent.ts)            | Set the rotation of a element. 	|	``element_id: string, x: number, y:number, z: number, tween: boolean, tween_duration: number``
-| [ElementScaleEvent](src/events/ElementScaleEvent.ts)             | Set the scaling factor of a element. 	|	``element_id: string, x: number, y:number, z: number, tween: boolean, tween_duration: number``
-| [ElementVisibilityEvent](src/events/ElementVisibilityEvent.ts)        | Set the visibility of a element. 	|	``element_id: string, state: boolean``
+| [ElementMuteEvent](src/events/ElementMuteEvent.ts)              | Mute or un-mute an element. 	|	``element_id: string, state: boolean``
+| [ElementPositionEvent](src/events/ElementPositionEvent.ts)          | Set the position of an element. 	|	``element_id: string, x: number, y:number, z: number, tween: boolean, tween_duration: number``
+| [ElementRotateEvent](src/events/ElementRotateEvent.ts)            | Set the rotation of an element. 	|	``element_id: string, x: number, y:number, z: number, tween: boolean, tween_duration: number``
+| [ElementScaleEvent](src/events/ElementScaleEvent.ts)             | Set the scaling factor of an element. 	|	``element_id: string, x: number, y:number, z: number, tween: boolean, tween_duration: number``
+| [ElementVisibilityEvent](src/events/ElementVisibilityEvent.ts)        | Set the visibility of an element. 	|	``element_id: string, state: boolean``
 | [MuteMasterEvent](src/events/MuteMasterEvent.ts)               | Mute or un-mute the whole room. 	|	``excluded_element: string, state: boolean``
 | [PingEvent](src/events/PingEvent.ts)                     | Event used to check communication between the windows. 	|	``-``
 | [PongEvent](src/events/PongEvent.ts)                     | Event used to check communication between the windows	|	``-``
